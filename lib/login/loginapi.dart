@@ -1,9 +1,10 @@
+import 'package:electra_wheels/services/user/getProfile.dart';
 import 'package:electra_wheels/user/userhomepage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+Map<String,dynamic> profiedata={};
 String baseurl = 'http://192.168.1.154:5000';
 int? lid;
 String? userType;
@@ -33,7 +34,7 @@ Future<void> loginApi(
     if (statusCode == 200 && loginStatus == 'success') {
       userType = data['Type'];
       lid = data['login_id'];
-
+     profiedata=await getProfileApi();
       // Navigate based on userType
       if (userType == 'user') {
         Navigator.pushReplacement(

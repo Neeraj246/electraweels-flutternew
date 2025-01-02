@@ -1,3 +1,4 @@
+import 'package:electra_wheels/services/user/sendComplaint.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintRegistrationScreen extends StatefulWidget {
@@ -134,6 +135,12 @@ class _ComplaintRegistrationScreenState extends State<ComplaintRegistrationScree
 
   void _submitComplaint() {
     if (_formKey.currentState!.validate()) {
+
+      sendComplaintApi(context,{
+        'title':_titleController.text  ,
+        'discription':_descriptionController.text  ,
+        'category':  _selectedCategory ,
+      });
       // Perform your complaint registration logic here
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Complaint Registered Successfully!')),

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:electra_wheels/login/loginpage.dart';
+import 'package:electra_wheels/services/user/getSpayers.dart';
+import 'package:electra_wheels/services/user/getservicestations.dart';
 import 'package:electra_wheels/user/chargingstdetails.dart';
 import 'package:electra_wheels/user/complaint.dart';
 import 'package:electra_wheels/user/feedback.dart';
@@ -154,7 +156,9 @@ class _UserhomepageState extends State<Userhomepage> {
                     'Service centres',
                     Icons.settings,
                     Colors.cyanAccent,
-                    () {
+                    ()async {
+                      List<Map<String,dynamic>>serviceStations=await getserviceStationsApi();
+                      List<Map<String,dynamic>>serviceSpayers=await getSpayersApi();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

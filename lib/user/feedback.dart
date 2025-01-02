@@ -1,3 +1,4 @@
+import 'package:electra_wheels/services/user/sentFeeedback.dart';
 import 'package:flutter/material.dart';
 
 class AddReviewScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   double _rating = 3.0;
   final TextEditingController _reviewController = TextEditingController();
 
-  void _submitReview() {
+  void _submitReview() async{
     final String reviewText = _reviewController.text.trim();
 
     if (_selectedStation == null) {
@@ -34,9 +35,18 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       return;
     }
 
+ await   sendFeedbackApi(
+        context, {
+          'station': _selectedStation,
+         'feedback': reviewText,
+         'rating':_rating
+         });
+
     // Handle submission logic here
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Review for $_selectedStation submitted successfully!")),
+      SnackBar(
+          content:
+              Text("Review for $_selectedStation submitted successfully!")),
     );
 
     // Clear the fields after submission
@@ -159,10 +169,4 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: AddReviewScreen(),
-  ));
 }
