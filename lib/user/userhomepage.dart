@@ -80,15 +80,15 @@ class _UserhomepageState extends State<Userhomepage> {
                   },
                   children: [
                     Image.asset(
-                      'assests/ev1.png',
+                      'assets/car.jpeg',
                       fit: BoxFit.cover,
                     ),
                     Image.asset(
-                      'assests/ev2.png',
+                      'assets/ev2.png',
                       fit: BoxFit.cover,
                     ),
                     Image.asset(
-                      'assests/ev3.jpeg',
+                      'assets/ev3.jpeg',
                       fit: BoxFit.cover,
                     ),
                   ],

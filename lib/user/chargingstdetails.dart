@@ -1,3 +1,4 @@
+import 'package:electra_wheels/services/user/getNearbyStations.dart';
 import 'package:electra_wheels/user/slotbooking.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,19 +14,19 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
   bool isLoading = false;
 
   // Predefined list of EV charging stations
-  final List<Map<String, dynamic>> locations = [
-    {'latitude': 11.2612, 'longitude': 75.7916, 'name': 'ECO Ev station'},
-    {
-      'latitude': 11.2600,
-      'longitude': 75.7926,
-      'name': 'Goodness charging station'
-    },
-    {
-      'latitude': 11.2687,
-      'longitude': 75.7928,
-      'name': 'Supreme charging center'
-    },
-    {'latitude': 11.2806, 'longitude': 75.7847, 'name': 'Fast charging center'},
+   List<Map<String, dynamic>> locations = [
+    // {'latitude': 11.2612, 'longitude': 75.7916, 'name': 'ECO Ev station'},
+    // {
+    //   'latitude': 11.2600,
+    //   'longitude': 75.7926,
+    //   'name': 'Goodness charging station'
+    // },
+    // {
+    //   'latitude': 11.2687,
+    //   'longitude': 75.7928,
+    //   'name': 'Supreme charging center'
+    // },
+    // {'latitude': 11.2806, 'longitude': 75.7847, 'name': 'Fast charging center'},
   ];
 
   // Function to get the current location
@@ -60,9 +61,13 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
       // Get current location
       _currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
+          
 
       // Calculate nearby locations
-      _findNearbyLocations();
+ locations=await     getNearByStationsApi({
+        'lalitude': _currentPosition.latitude,
+        'logitude': _currentPosition.longitude
+      });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error getting location: $e")),
@@ -75,32 +80,32 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
   }
 
   // Function to find nearby locations within 5 km
-  void _findNearbyLocations() {
-    List<Map<String, dynamic>> withinRadius = [];
+  // void _findNearbyLocations() {
+  //   List<Map<String, dynamic>> withinRadius = [];
 
-    for (var location in locations) {
-      double distance = Geolocator.distanceBetween(
-        _currentPosition.latitude,
-        _currentPosition.longitude,
-        location['latitude'],
-        location['longitude'],
-      );
+  //   for (var location in locations) {
+  //     double distance = Geolocator.distanceBetween(
+  //       _currentPosition.latitude,
+  //       _currentPosition.longitude,
+  //       location['latitude'],
+  //       location['longitude'],
+  //     );
 
-      if (distance <= 5000) {
-        withinRadius.add({
-          'name': location['name'],
-          'latitude': location['latitude'],
-          'longitude': location['longitude'],
-          'distance': distance,
+  //     if (distance <= 5000) {
+  //       withinRadius.add({
+  //         'name': location['name'],
+  //         'latitude': location['latitude'],
+  //         'longitude': location['longitude'],
+  //         'distance': distance,
         
-        });
-      }
-    }
+  //       });
+  //     }
+  //   }
 
-    setState(() {
-      nearbyLocations = withinRadius;
-    });
-  }
+  //   setState(() {
+  //     nearbyLocations = withinRadius;
+  //   });
+  // }
 
   // Navigate to details screen
   void _navigateToDetails(Map<String, dynamic> location) {

@@ -20,7 +20,7 @@ class _LoginpageState extends State<Loginpage> {
         // fit: StackFit.expand,
         children: [
           Image.asset(
-            "assests/ev1.jpeg",
+            "assets/car.jpeg",
             fit: BoxFit.fill,height: double.infinity,
           ),
           Container(
