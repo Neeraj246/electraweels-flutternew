@@ -1,5 +1,6 @@
 import 'package:electra_wheels/login/loginapi.dart';
 import 'package:electra_wheels/login/register.dart';
+import 'package:electra_wheels/login/registration.dart';
 import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {
@@ -128,7 +129,7 @@ class _LoginpageState extends State<Loginpage> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const Register()),
+                              MaterialPageRoute(builder: (context) => const Registration()),
                             );
                           },
                           child: Text(

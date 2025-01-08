@@ -8,11 +8,11 @@ import 'package:electra_wheels/login/loginapi.dart';
 
 final dio = Dio();
 
-Future<List<Map<String,dynamic>>> getserviceStationsApi() async {
+Future<List<Map<String,dynamic>>> getSpayersApi() async {
   try {
-    // print(data);
+  
     Response response =
-        await dio.post('$baseurl/viewStations', );
+        await dio.get('$baseurl/ViewSpare');
     print(response);
     print(response.statusCode);
     if (response.statusCode == 200) {

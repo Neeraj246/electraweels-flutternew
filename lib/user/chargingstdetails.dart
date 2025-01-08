@@ -1,4 +1,6 @@
-import 'package:electra_wheels/services/user/getNearbyStations.dart';
+import 'package:electra_wheels/login/loginapi.dart';
+import 'package:electra_wheels/services/user/bookstationapi.dart';
+import 'package:electra_wheels/user/getNearbyStations.dart';
 import 'package:electra_wheels/user/slotbooking.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,23 +12,12 @@ class NearbyLocationsScreen extends StatefulWidget {
 
 class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
   late Position _currentPosition;
-  List<Map<String, dynamic>> nearbyLocations = [];
+  // List<Map<String, dynamic>> nearbyLocations = [];
   bool isLoading = false;
 
   // Predefined list of EV charging stations
    List<Map<String, dynamic>> locations = [
-    // {'latitude': 11.2612, 'longitude': 75.7916, 'name': 'ECO Ev station'},
-    // {
-    //   'latitude': 11.2600,
-    //   'longitude': 75.7926,
-    //   'name': 'Goodness charging station'
-    // },
-    // {
-    //   'latitude': 11.2687,
-    //   'longitude': 75.7928,
-    //   'name': 'Supreme charging center'
-    // },
-    // {'latitude': 11.2806, 'longitude': 75.7847, 'name': 'Fast charging center'},
+   
   ];
 
   // Function to get the current location
@@ -139,13 +130,13 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
             SizedBox(height: 20),
             isLoading
                 ? Center(child: CircularProgressIndicator())
-                : nearbyLocations.isEmpty
+                : locations.isEmpty
                     ? Text('No locations found within 5 km radius.')
                     : Expanded(
                         child: ListView.builder(
-                          itemCount: nearbyLocations.length,
+                          itemCount: locations.length,
                           itemBuilder: (context, index) {
-                            final location = nearbyLocations[index];
+                            final location = locations[index];
                             return GestureDetector(
                               onTap: () => _navigateToDetails(location),
                               child: Card(
@@ -154,6 +145,7 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
                                 ),
                                 elevation: 5,
                                 margin: EdgeInsets.symmetric(vertical: 8),
+                    
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
@@ -161,7 +153,7 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        location['name'],
+                                        location['Name'],
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -169,7 +161,7 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
                                       ),
                                       SizedBox(height: 8),
                                       Text(
-                                        'Distance: ${(location['distance'] / 1000).toStringAsFixed(2)} km',
+                                        'No: ${(location['StationNumber'])} ',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.grey[600],
@@ -190,36 +182,38 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
   }
 }
 
-// EV Station Details Screen
-class EVStationDetailsScreen extends StatelessWidget {
+
+
+
+
+class EVStationDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> location;
 
   EVStationDetailsScreen({required this.location});
 
   @override
+  _EVStationDetailsScreenState createState() => _EVStationDetailsScreenState();
+}
+
+class _EVStationDetailsScreenState extends State<EVStationDetailsScreen> {
+  // The currently selected payment method
+  String? _selectedPaymentMethod;
+
+  // Available payment methods
+  final List<String> paymentMethods = [
+    'UPI',
+    'Credit/Debit Card',
+    'Net Banking',
+    'Cash',
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    // Mock details for demonstration
-    final List<Map<String, String>> chargingDetails = [
-      {
-        'type': 'Fast Charging',
-        'price': '₹12/kWh',
-        'time': '8:00 AM - 10:00 PM'
-      },
-      {'type': 'Normal Charging', 'price': '₹8/kWh', 'time': '24 Hours'},
-    ];
-
-    final List<String> paymentMethods = [
-      'UPI',
-      'Credit/Debit Card',
-      'Net Banking',
-      'Cash',
-    ];
-
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: const Color.fromARGB(255, 33, 58, 34),
+        backgroundColor: const Color.fromARGB(255, 33, 58, 34),
         title: Text(
-          location['name'],
+          widget.location['Name'],
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -230,73 +224,55 @@ class EVStationDetailsScreen extends StatelessWidget {
           children: [
             // Station Name
             Text(
-              location['name'],
+              widget.location['Name'],
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             // Coordinates
             Text(
-              'Latitude: ${location['latitude']} | Longitude: ${location['longitude']}',
+              'Latitude: ${widget.location['latitude']} | Longitude: ${widget.location['longitude']}',
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
             SizedBox(height: 8),
-            // Distance
-            Text(
-              'Distance: ${(location['distance'] / 1000).toStringAsFixed(2)} km',
-              style: TextStyle(fontSize: 18, color: Colors.grey[600]),
-            ),
             Divider(thickness: 1, height: 30),
 
-            // Charging Details
+            // Payment Methods - Selection using Chips
             Text(
-              'Charging Details',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 12),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: chargingDetails.length,
-              itemBuilder: (context, index) {
-                final detail = chargingDetails[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ListTile(
-                    leading: Icon(Icons.electric_bolt, color: Colors.orange),
-                    title: Text(detail['type'] ?? ''),
-                    subtitle: Text(
-                        'Price: ${detail['price']} | Available: ${detail['time']}'),
-                  ),
-                );
-              },
-            ),
-            Divider(thickness: 1, height: 30),
-
-            // Payment Options
-            Text(
-              'Payment Methods',
+              'Select Payment Method',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
             Wrap(
               spacing: 8,
-              children: paymentMethods
-                  .map((method) => Chip(
-                        label: Text(method),
-                        avatar: Icon(
-                          Icons.payment,
-                          color: Colors.blue,
-                        ),
-                        backgroundColor: Colors.blue[50],
-                      ))
-                  .toList(),
+              children: paymentMethods.map((method) {
+                return ChoiceChip(
+                  label: Text(method),
+                  selected: _selectedPaymentMethod == method,
+                  onSelected: (isSelected) {
+                    setState(() {
+                      _selectedPaymentMethod = isSelected ? method : null;
+                    });
+                  },
+                  selectedColor: Colors.blue[300],
+                  backgroundColor: Colors.grey[200],
+                  labelStyle: TextStyle(
+                    color: _selectedPaymentMethod == method
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                );
+              }).toList(),
             ),
+            SizedBox(height: 12),
+            // If a payment method is selected, show it
+            if (_selectedPaymentMethod != null)
+              Text(
+                'Selected Payment Method: $_selectedPaymentMethod',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             Divider(thickness: 1, height: 30),
 
-            // Open Hours
+            // Operating Hours
             Text(
               'Operating Hours',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -312,15 +288,27 @@ class EVStationDetailsScreen extends StatelessWidget {
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SlotBookingScreen()),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: Text('Booking functionality coming soon!')),
-                  );
+                  if (_selectedPaymentMethod == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please select a payment method!')),
+                    );
+                  } else {
+                    Map<String, dynamic> data={
+                      'USER':lid,
+                      'STATION':widget.location['id']  ,
+                      'Amount':100  ,
+                      'Status':'pendiing',
+
+        
+                      
+
+                    };
+                    BookChargingSyation(data,context);
+
+
+                    // booking
+                  
+                  }
                 },
                 icon: Icon(Icons.book_online),
                 label: Text('Book a Charging Slot'),
@@ -337,8 +325,4 @@ class EVStationDetailsScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(home: NearbyLocationsScreen()));
 }

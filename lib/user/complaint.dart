@@ -1,4 +1,4 @@
-import 'package:electra_wheels/services/user/sendComplaint.dart';
+import 'package:electra_wheels/user/sendComplaint.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintRegistrationScreen extends StatefulWidget {
@@ -52,11 +52,11 @@ class _ComplaintRegistrationScreenState extends State<ComplaintRegistrationScree
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+                SizedBox(height: 16.0),
 
-              // Category Dropdown
-              _buildDropdownField(),
-              SizedBox(height: 20.0),
+                // Category Dropdown
+                _buildDropdownField(),
+                SizedBox(height: 20.0),
 
               // Centered Submit Button
               Center(

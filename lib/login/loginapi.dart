@@ -1,33 +1,35 @@
-import 'package:electra_wheels/services/user/getProfile.dart';
+import 'package:dio/dio.dart';
+import 'package:electra_wheels/user/getProfile.dart';
 import 'package:electra_wheels/user/userhomepage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 Map<String,dynamic> profiedata={};
-String baseurl = 'http://192.168.1.154:5000';
+String baseurl ='http://192.168.1.253:5000';
 int? lid;
 String? userType;
 String? loginStatus;
+Dio _dio =Dio();
 
 Future<void> loginApi(
     String username, String password, BuildContext context) async {
   try {
     // Prepare the URI with query parameters
-    final uri = Uri.parse('$baseurl/LoginPageApi',);
+    // final uri = Uri.parse('$baseurl/LoginPageApi',);
 
     // Perform the POST request
-    final response = await http.post(uri,body:{
+    final response = await _dio.post('$baseurl/LoginPageApi',data:{
       'email' : username,
       'password' : password
     });
 
     // Check the status code and response data
-    print(response.body);
-    int statusCode = response.statusCode;
+    print(response.data);
+    int statusCode = response.statusCode!;
     print('Status code: $statusCode');
     // Decode the JSON response
-    final data = json.decode(response.body);
+    final data = response.data;
 
     loginStatus = data['message'] ?? 'failed';
 
@@ -37,6 +39,7 @@ Future<void> loginApi(
      profiedata=await getProfileApi();
       // Navigate based on userType
       if (userType == 'user') {
+        print("^^^^^^^^^^^^^^^^^");
         Navigator.pushReplacement(
           context,
         MaterialPageRoute(builder: (ctx) => Userhomepage()),

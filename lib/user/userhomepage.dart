@@ -1,10 +1,15 @@
 import 'dart:async';
 import 'package:electra_wheels/login/loginpage.dart';
-import 'package:electra_wheels/services/user/getSpayers.dart';
-import 'package:electra_wheels/services/user/getservicestations.dart';
+import 'package:electra_wheels/services/user/getBookingHistory.dart';
+import 'package:electra_wheels/services/user/getStationBookingHistory.dart';
 import 'package:electra_wheels/user/chargingstdetails.dart';
 import 'package:electra_wheels/user/complaint.dart';
+import 'package:electra_wheels/user/complaint_page.dart';
 import 'package:electra_wheels/user/feedback.dart';
+import 'package:electra_wheels/user/getSpayers.dart';
+import 'package:electra_wheels/user/getservicestations.dart';
+import 'package:electra_wheels/user/slotbookingHistory.dart';
+import 'package:electra_wheels/user/viewSpayerBookingHistory.dart';
 import 'package:electra_wheels/user/viewservice.dart';
 import 'package:flutter/material.dart';
 
@@ -50,8 +55,11 @@ class _UserhomepageState extends State<Userhomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard",style: TextStyle(color: Colors.white),),
-         backgroundColor: const Color.fromARGB(255, 33, 58, 34),
+        title: Text(
+          "Dashboard",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 33, 58, 34),
       ),
       drawer: _buildDrawer(context),
       body: SingleChildScrollView(
@@ -150,23 +158,27 @@ class _UserhomepageState extends State<Userhomepage> {
                       );
                     },
                   ),
-               
                   _buildGridItem(
                     context,
                     'Service centres',
                     Icons.settings,
                     Colors.cyanAccent,
-                    ()async {
-                      List<Map<String,dynamic>>serviceStations=await getserviceStationsApi();
-                      List<Map<String,dynamic>>serviceSpayers=await getSpayersApi();
+                    () async {
+                      List<Map<String, dynamic>> serviceStations =
+                          await getserviceStationsApi();
+                      List<Map<String, dynamic>> serviceSpayers =
+                          await getSpayersApi();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ServiceAndSparesScreen()),
+                            builder: (context) => ServiceAndSparesScreen(
+                                  sericeSenters: serviceStations,
+                                  spayers: serviceSpayers,
+                                )),
                       );
                     },
                   ),
-                     _buildGridItem(
+                  _buildGridItem(
                     context,
                     'Feedback',
                     Icons.rate_review,
@@ -188,7 +200,7 @@ class _UserhomepageState extends State<Userhomepage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ComplaintRegistrationScreen()),
+                            builder: (context) => ComplaintPage()),
                       );
                     },
                   ),
@@ -222,22 +234,14 @@ class _UserhomepageState extends State<Userhomepage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Profile',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'abc',
+                    'user',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    'abc@example.com',
+                    'user@gmail.com',
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
@@ -247,7 +251,33 @@ class _UserhomepageState extends State<Userhomepage> {
               ),
             ),
           ),
-          ListTile(),
+          ListTile(
+            title: Text('Bookings'),
+            leading: Icon(Icons.history),
+            onTap: ()async {
+              List<Map<String,dynamic>>history=await getstationBokingHistoryApi();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SlotBookingHistoryScreen(bookingHistory: history,)));
+            },
+          ),
+
+
+           ListTile(
+            title: Text('Spare Booking '),
+            leading: Icon(Icons.history),
+            onTap: ()async {
+              List<Map<String,dynamic>>history=await getspayerBokingHistoryApi();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookingHistoryScreen(bookingHistory: history,)));
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
           ListTile(
             leading: IconButton(
               icon: Icon(Icons.logout_outlined),
