@@ -3,6 +3,8 @@ import 'package:electra_wheels/login/loginapi.dart';
 import 'package:flutter/material.dart';
 
 class AddReviewScreen extends StatefulWidget {
+  const AddReviewScreen({super.key});
+
   @override
   _AddReviewScreenState createState() => _AddReviewScreenState();
 }
@@ -18,7 +20,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   Future<void> _fetchStations() async {
     try {
       Response response = await Dio().get(
-        'http://192.168.1.253:5000/viewStations', // Replace with your actual API endpoint
+        '$baseurl/viewStations', // Replace with your actual API endpoint
       );
 
       if (response.statusCode == 200) {

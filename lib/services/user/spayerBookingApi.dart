@@ -7,10 +7,10 @@ final dio = Dio();
 
 Future<Map<String, dynamic>> BookSpayerApi(Map<String, dynamic>data,context) async {
   try {
-    final response = await dio.get('$baseurl/Bookspare', data: data);
+    final response = await dio.post('$baseurl/Bookspare', data: data);
     print("qqqqqqqqqqqqqqqqqq${response.data}");
     
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200||response.statusCode==201) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('booking Success')));
       return response.data;

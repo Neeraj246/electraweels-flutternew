@@ -2,6 +2,8 @@ import 'package:electra_wheels/user/sendComplaint.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintRegistrationScreen extends StatefulWidget {
+  const ComplaintRegistrationScreen({super.key});
+
   @override
   _ComplaintRegistrationScreenState createState() => _ComplaintRegistrationScreenState();
 }

@@ -1,4 +1,5 @@
 import 'package:electra_wheels/login/loginpage.dart';
+import 'package:electra_wheels/login/registerapi.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -16,6 +17,10 @@ class _RegisterState extends State<Register> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _addressController = TextEditingController();
+
+  final TextEditingController _vehiclenoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +142,40 @@ class _RegisterState extends State<Register> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _addressController,
+                  labelText: 'Address',
+                  hintText: 'Enter your Address',
+                  icon: Icons.account_circle,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    if (value.length < 3) {
+                      return 'Username must be at least 3 characters long';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                _buildTextField(
+                  controller: _vehiclenoController,
+                  labelText: 'Vehicle Number',
+                  hintText: 'Enter your vehiclenumbers',
+                  icon: Icons.account_circle,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    if (value.length < 3) {
+                      return 'Username must be at least 3 characters long';
+                    }
+                    return null;
+                  },
+                ),
+
                 const SizedBox(height: 40),
                 // Submit Button
                 ElevatedButton(
@@ -206,19 +245,15 @@ class _RegisterState extends State<Register> {
       // Handle form submission
       Map<String, String> data = {
         'Name': _nameController.text,
-        'Phone Number': _phoneNumberController.text,
-        'Username': _usernameController.text,
-        'Password': _passwordController.text,
+        'Phone': _phoneNumberController.text,
+        'username': _usernameController.text,
+        'password': _passwordController.text,
         'Email': _emailController.text,
-        
-        
-        
+        "Address": _addressController.text,
+        "Vehiclenumber": _vehiclenoController.text
       };
-      print('Form Data: $data');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const Loginpage()));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registration Successful')),
-      );
+      registrationdataApi(data, context);
+      // print('Form Data: $data');
     }
   }
 }

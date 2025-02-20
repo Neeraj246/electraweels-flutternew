@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 final dio = Dio();
 
 
-Future<Map<String, dynamic>> BookChargingStation(Map<String, dynamic>data,context) async {
+Future<Map<String, dynamic>> BookingstatusApi(Map<String, dynamic>data,context) async {
   try {
-    final response = await dio.post('$baseurl/bookstationslot', data: data);
+    final response = await dio.post('$baseurl/bookinstatus', data: data);
     print("qqqqqqqqqqqqqqqqqq${response.data}");
     
     if (response.statusCode == 200) {

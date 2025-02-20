@@ -75,6 +75,7 @@ class _StationregState extends State<Stationreg> {
                      {
                       return 'please enter your address';
                      }
+                     return null;
                     
                   },
       

@@ -75,6 +75,7 @@ class _ServiceregState extends State<Servicereg> {
                     if (value!.isEmpty) {
                       return 'Please enter your address';
                     }
+                    return null;
                   }
                 ),
                 const SizedBox(height: 20),

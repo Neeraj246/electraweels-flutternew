@@ -3,7 +3,6 @@ import 'package:electra_wheels/login/loginpage.dart';
 import 'package:electra_wheels/services/user/getBookingHistory.dart';
 import 'package:electra_wheels/services/user/getStationBookingHistory.dart';
 import 'package:electra_wheels/user/chargingstdetails.dart';
-import 'package:electra_wheels/user/complaint.dart';
 import 'package:electra_wheels/user/complaint_page.dart';
 import 'package:electra_wheels/user/feedback.dart';
 import 'package:electra_wheels/user/getSpayers.dart';
@@ -14,6 +13,8 @@ import 'package:electra_wheels/user/viewservice.dart';
 import 'package:flutter/material.dart';
 
 class Userhomepage extends StatefulWidget {
+  const Userhomepage({super.key});
+
   @override
   _UserhomepageState createState() => _UserhomepageState();
 }
@@ -219,7 +220,7 @@ class _UserhomepageState extends State<Userhomepage> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          Container(
+          SizedBox(
             height: 250,
             child: DrawerHeader(
               decoration: BoxDecoration(

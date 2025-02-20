@@ -42,7 +42,6 @@ class _RegistrationState extends State<Registration> {
         MaterialPageRoute(builder: (ctx) => Register()));
                   // Handle registration logic here
                 },
-                child: Text('USER'),
                 style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(vertical: 12, horizontal: 85),
                               shape: RoundedRectangleBorder(
@@ -50,6 +49,7 @@ class _RegistrationState extends State<Registration> {
                               ),
                               backgroundColor: const Color.fromARGB(255, 215, 217, 222),
                             ),
+                child: Text('USER'),
               ),
                SizedBox(height: 20),
               ElevatedButton(
@@ -59,7 +59,6 @@ class _RegistrationState extends State<Registration> {
         MaterialPageRoute(builder: (ctx) => Stationreg()));
                   // Handle registration logic here
                 },
-                child: Text('STATION'),
                 style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(vertical: 12, horizontal: 75),
                               shape: RoundedRectangleBorder(
@@ -67,6 +66,7 @@ class _RegistrationState extends State<Registration> {
                               ),
                               backgroundColor: const Color.fromARGB(255, 215, 217, 222),
                             ),
+               child: Text('STATION'),
               ),
                SizedBox(height: 20),
               ElevatedButton(
@@ -76,7 +76,6 @@ class _RegistrationState extends State<Registration> {
         MaterialPageRoute(builder: (ctx) => Servicereg()));
                   // Handle registration logic here
                 },
-                child: Text('SERVICE CENTER'),
                 style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
                               shape: RoundedRectangleBorder(
@@ -84,6 +83,7 @@ class _RegistrationState extends State<Registration> {
                               ),
                               backgroundColor: const Color.fromARGB(255, 215, 217, 222),
                             ),
+                child: Text('SERVICE CENTER'),
               ),
             ],
           ),

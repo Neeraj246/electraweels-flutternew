@@ -3,10 +3,8 @@ import 'package:electra_wheels/user/getProfile.dart';
 import 'package:electra_wheels/user/userhomepage.dart';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 Map<String,dynamic> profiedata={};
-String baseurl ='http://192.168.1.253:5000';
+String baseurl ='http://192.168.1.101:5000';
 int? lid;
 String? userType;
 String? loginStatus;
@@ -20,7 +18,7 @@ Future<void> loginApi(
 
     // Perform the POST request
     final response = await _dio.post('$baseurl/LoginPageApi',data:{
-      'email' : username,
+      'username' : username,
       'password' : password
     });
 
@@ -33,12 +31,12 @@ Future<void> loginApi(
 
     loginStatus = data['message'] ?? 'failed';
 
-    if (statusCode == 200 && loginStatus == 'success') {
+    if (statusCode == 200 ) {
       userType = data['Type'];
       lid = data['login_id'];
      profiedata=await getProfileApi();
       // Navigate based on userType
-      if (userType == 'user') {
+      if (userType == 'USER') {
         print("^^^^^^^^^^^^^^^^^");
         Navigator.pushReplacement(
           context,

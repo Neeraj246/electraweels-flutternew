@@ -79,7 +79,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       }
                     : () {
                       Map<String,dynamic>data={
-                        'SPARE':widget.itemdata['Name'],
+                        'SPARE':widget.itemdata['id'],
                         'Amount':widget.itemdata['Amount'],
                         'PaymentMethod':_selectedPaymentMethod,
                         'Status':'pending',

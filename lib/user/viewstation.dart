@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class ChargingStationsMap extends StatefulWidget {
+  const ChargingStationsMap({super.key});
+
   @override
   _ChargingStationsMapState createState() => _ChargingStationsMapState();
 }

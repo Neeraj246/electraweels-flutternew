@@ -4,7 +4,7 @@ class BookingHistoryScreen extends StatelessWidget {
   // Sample booking data
   final List<Map<String, dynamic>> bookingHistory;
 
-  BookingHistoryScreen({super.key, required this.bookingHistory});
+  const BookingHistoryScreen({super.key, required this.bookingHistory});
 
   @override
   Widget build(BuildContext context) {

@@ -37,7 +37,7 @@ class ServiceAndSparesScreen extends StatelessWidget {
 }
 
 class ServiceCentersView extends StatelessWidget {
-  ServiceCentersView({super.key, this.sericeSenters, this.spayers});
+  const ServiceCentersView({super.key, this.sericeSenters, this.spayers});
   final sericeSenters;
   final spayers;
 

@@ -1,11 +1,12 @@
 import 'package:electra_wheels/login/loginapi.dart';
 import 'package:electra_wheels/services/user/bookstationapi.dart';
 import 'package:electra_wheels/user/getNearbyStations.dart';
-import 'package:electra_wheels/user/slotbooking.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class NearbyLocationsScreen extends StatefulWidget {
+  const NearbyLocationsScreen({super.key});
+
   @override
   _NearbyLocationsScreenState createState() => _NearbyLocationsScreenState();
 }
@@ -189,7 +190,7 @@ class _NearbyLocationsScreenState extends State<NearbyLocationsScreen> {
 class EVStationDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> location;
 
-  EVStationDetailsScreen({required this.location});
+  const EVStationDetailsScreen({super.key, required this.location});
 
   @override
   _EVStationDetailsScreenState createState() => _EVStationDetailsScreenState();
@@ -303,7 +304,7 @@ class _EVStationDetailsScreenState extends State<EVStationDetailsScreen> {
                       
 
                     };
-                    BookChargingSyation(data,context);
+                    BookChargingStation(data,context);
 
 
                     // booking

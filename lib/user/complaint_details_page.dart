@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class ComplaintDetailsPage extends StatelessWidget {
   final Map<String, dynamic> complaint;
 
-  const ComplaintDetailsPage({Key? key, required this.complaint})
-      : super(key: key);
+  const ComplaintDetailsPage({super.key, required this.complaint});
 
   @override
   Widget build(BuildContext context) {
